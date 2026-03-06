@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown, LogOut, Settings, User } from "lucide-react";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 export function HeaderUser({
   user,
@@ -22,6 +23,8 @@ export function HeaderUser({
     avatar: string;
   };
 }) {
+  const router = useRouter();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -32,7 +35,7 @@ export function HeaderUser({
         >
           <div className="text-primary flex items-center cursor-pointer">
             <ChevronDown strokeWidth={3} className="mr-1 h-4 w-4" />
-            <span className="mx-1 font-medium">{user.name}</span>
+            <span className="mx-1 font-bold">{user.name}</span>
             <Avatar className="ml-2 h-8 w-8">
               <AvatarImage
                 src={user.avatar}
@@ -44,7 +47,7 @@ export function HeaderUser({
           </div>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
+      <DropdownMenuContent align="end">
         <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
@@ -58,9 +61,17 @@ export function HeaderUser({
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50">
+        <DropdownMenuItem
+          onClick={() => {
+            document.cookie =
+              "auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
+            router.push("/sign-in");
+          }}
+          className="cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50"
+        >
           <LogOut className="mr-2 h-4 w-4" />
-          <span>Log out</span>
+          <span>Sign out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

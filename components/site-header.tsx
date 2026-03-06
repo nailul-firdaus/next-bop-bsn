@@ -80,7 +80,7 @@ export function SiteHeader() {
             <div className="flex max-w-md w-full">
               <div className="flex w-full items-stretch drop-shadow-sm">
                 <Select defaultValue="transaction_id">
-                  <SelectTrigger className="w-38 h-11 rounded-lg rounded-r-none border-0 bg-primary text-white hover:bg-primary/90 focus:ring-0 focus:ring-offset-0 focus:bg-primary font-medium [&>svg]:text-white! [&>svg]:opacity-100! [&_svg]:stroke-[3px]!">
+                  <SelectTrigger className="w-38 h-11 rounded-lg rounded-r-none border-0 bg-primary text-background hover:bg-primary/90 focus:ring-0 focus:ring-offset-0 focus:bg-primary font-medium [&>svg]:text-background! [&>svg]:opacity-100! [&_svg]:stroke-[3px]!">
                     <SelectValue placeholder="Filter" />
                   </SelectTrigger>
                   <SelectContent>
@@ -101,10 +101,10 @@ export function SiteHeader() {
                   <Input
                     type="text"
                     placeholder="Search..."
-                    className="h-9 w-full rounded-lg rounded-l-none border-gray-100 border-l-0 bg-white pl-4 pr-11 text-base placeholder:text-gray-300 focus-visible:ring-1 focus-visible:ring-gray-400 focus-visible:ring-offset-0 focus-visible:border-gray-400"
+                    className="h-9 w-full rounded-lg rounded-l-none border-l-0 bg-background pl-4 pr-11 text-base placeholder:text-muted-foreground/30 focus-visible:ring-1 focus-visible:ring-offset-0"
                   />
                   <Search
-                    className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-300"
+                    className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground/30"
                     strokeWidth={3}
                   />
                 </div>
@@ -113,7 +113,11 @@ export function SiteHeader() {
             <div className="flex md:hidden">
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-gray-500">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-muted-foreground"
+                  >
                     <Search strokeWidth={3} className="w-5 h-5" />
                   </Button>
                 </DialogTrigger>
@@ -126,10 +130,10 @@ export function SiteHeader() {
                       <Input
                         type="text"
                         placeholder="Search..."
-                        className="h-11 w-full rounded-lg border-gray-100 border-l-0 bg-background pl-4 pr-11 text-base placeholder:text-muted focus-visible:ring-1 focus-visible:ring-gray-400 focus-visible:ring-offset-0 focus-visible:border-gray-400"
+                        className="h-11 w-full rounded-lg bg-background text-base focus-visible:ring-1 focus-visible:ring-offset-0"
                       />
                       <Search
-                        className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted"
+                        className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground/50"
                         strokeWidth={3}
                       />
                     </div>
