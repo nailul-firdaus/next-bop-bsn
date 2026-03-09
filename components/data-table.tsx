@@ -54,6 +54,9 @@ import {
   GripVertical,
   PlusCircle,
   X,
+  Info,
+  Edit,
+  Trash2,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -64,6 +67,7 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -175,12 +179,9 @@ function DataTableColumnHeader<TData, TValue>({
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => column.toggleVisibility(false)}
-            className="cursor-pointer"
+            className="cursor-pointer text-red-500 focus:text-red-500 focus:bg-red-50"
           >
-            <EyeOff
-              className="mr-2 h-4 w-4 text-muted-foreground"
-              strokeWidth={2}
-            />
+            <EyeOff className="mr-2 h-4 w-4 text-red-500" strokeWidth={2} />
             Hide
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -323,7 +324,7 @@ const columns: ColumnDef<Transaction>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => (
+    cell: () => (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
@@ -332,16 +333,25 @@ const columns: ColumnDef<Transaction>[] = [
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Aksi</DropdownMenuLabel>
-          <DropdownMenuItem
-            onClick={() =>
-              navigator.clipboard.writeText(row.original.referenceId)
-            }
-          >
-            Salin No. Referensi
-          </DropdownMenuItem>
+          <DropdownMenuLabel>Action</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Lihat Detail</DropdownMenuItem>
+          <DropdownMenuGroup>
+            <DropdownMenuItem className="cursor-pointer">
+              <Info className="mr-2 h-4 w-4" />
+              <span>Detail</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">
+              <Edit className="mr-2 h-4 w-4" />
+              <span>Edit</span>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <DropdownMenuItem className="cursor-pointer text-red-500 focus:text-red-500 focus:bg-red-50">
+              <Trash2 className="mr-2 h-4 w-4 text-red-500" />
+              <span>Delete</span>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
     ),

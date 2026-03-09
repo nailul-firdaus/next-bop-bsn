@@ -1,9 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Bell, RefreshCw, Search } from "lucide-react";
+import { Bell, ChevronDown, RefreshCw, Search } from "lucide-react";
 import { HeaderUser } from "./header-user";
 import { user } from "@/lib/data/user";
 import { useState } from "react";
@@ -24,9 +25,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { LANGUAGES } from "@/lib/data/languages";
+
+type LanguageCode = (typeof LANGUAGES)[number]["code"];
 
 export function SiteHeader() {
   const [isSynchronizing, setIsSynchronizing] = useState<boolean>(false);
+  const [language, setLanguage] = useState<LanguageCode>("US");
+  const currentLanguage =
+    LANGUAGES.find((item) => item.code === language) || LANGUAGES[0];
 
   const handleSynchronize = () => {
     if (isSynchronizing) return;
@@ -45,7 +58,7 @@ export function SiteHeader() {
           <Button
             size="sm"
             className={cn(
-              "text-primary bg-background hover:bg-primary/25 border-2 border-primary",
+              "text-primary bg-background hover:bg-primary/25 border-2 border-primary font-bold",
               isSynchronizing
                 ? "animate-pulse bg-primary/5 cursor-not-allowed"
                 : "hover:bg-primary/25",
@@ -60,6 +73,61 @@ export function SiteHeader() {
             <span>{isSynchronizing ? "Synchronizing..." : "Synchronize"}</span>
           </Button>
           <div className="ml-auto flex items-center gap-4">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="hidden sm:flex px-0! hover:bg-transparent"
+                >
+                  <div className="text-primary font-bold flex items-center cursor-pointer gap-1">
+                    <Image
+                      src={currentLanguage.flag}
+                      alt="Flag"
+                      width={50}
+                      height={50}
+                      className="w-4 h-4"
+                    />
+                    <span>{currentLanguage.code}</span>
+                    <ChevronDown className="w-4 h-4" strokeWidth={3} />
+                  </div>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  onClick={() => setLanguage("US")}
+                  className={cn(
+                    "cursor-pointer",
+                    language === "US" && "bg-accent",
+                  )}
+                >
+                  <Image
+                    src="/images/us.svg"
+                    alt="English (US)"
+                    width={50}
+                    height={50}
+                    className="w-4 h-4"
+                  />
+                  <span>English (US)</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setLanguage("ID")}
+                  className={cn(
+                    "cursor-pointer",
+                    language === "ID" && "bg-accent",
+                  )}
+                >
+                  <Image
+                    src="/images/id.svg"
+                    alt="Indonesia (ID)"
+                    width={50}
+                    height={50}
+                    className="w-4 h-4"
+                  />
+                  <span>Indonesia (ID)</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Bell className="text-primary w-4 h-4" strokeWidth={3} />
             <RefreshCw className="text-primary w-4 h-4" strokeWidth={3} />
             <HeaderUser user={user} />
